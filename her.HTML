@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Reasons Why I Love You 💜</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  background: linear-gradient(180deg, #cfa9ff, #f7e9ff);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* sparkles */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(white 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.4;
+  animation: sparkle 6s linear infinite;
+}
+
+@keyframes sparkle {
+  from { background-position: 0 0; }
+  to { background-position: 40px 40px; }
+}
+
+.card {
+  background: #f9f1ff;
+  border-radius: 20px;
+  padding: 40px;
+  width: 90%;
+  max-width: 700px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+h1 {
+  color: #a15cff;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.reason-btn, .choice-btn {
+  display: block;
+  margin: 15px auto;
+  padding: 14px 20px;
+  background: #e5c8ff;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.reason-btn:hover,
+.choice-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.text {
+  font-size: 12px;
+  color: #6b3fa0;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.choices {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.hidden {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="screen-main">
+  <h1>💜 Reasons why I love you 💜</h1>
+  <div id="reason-list"></div>
+</div>
+
+<div class="card hidden" id="screen-reason">
+  <div class="text" id="reason-text"></div>
+  <div class="choices">
+    <button class="choice-btn" id="nope">😤 Unacceptable</button>
+    <button class="choice-btn" id="yet">💖 And yet…</button>
+  </div>
+</div>
+
+<div class="card hidden" id="screen-twist">
+  <div class="text" id="twist-text"></div>
+  <button class="reason-btn" onclick="goHome()">✨ Back</button>
+</div>
+
+<script>
+const reasons = [
+  {
+    title: "😴 You fall asleep otp w me",
+    detail: "its cute.\ni love it.\nsome call it cringe.",
+    twist: "And somehow… it’s the cutest thing ever."
+  },
+  {
+    title: "🍔 You ask for food",
+    detail: "always asking.\nWithout shame.\nWith confidence.",
+    twist: "And I’d still buy you it."
+  },
+  {
+    title: "💬 you care for me i hope",
+    detail: "Every text.\nEvery tone.\nAnd if you dont care.",
+    twist: "Because you care deeply — and I love that."
+  }
+];
+
+const main = document.getElementById("screen-main");
+const reasonScreen = document.getElementById("screen-reason");
+const twistScreen = document.getElementById("screen-twist");
+
+const list = document.getElementById("reason-list");
+const reasonText = document.getElementById("reason-text");
+const twistText = document.getElementById("twist-text");
+
+let current = null;
+
+reasons.forEach((r, i) => {
+  const btn = document.createElement("button");
+  btn.className = "reason-btn";
+  btn.textContent = r.title;
+  btn.onclick = () => showReason(i);
+  list.appendChild(btn);
+});
+
+function showReason(i) {
+  current = reasons[i];
+  main.classList.add("hidden");
+  reasonScreen.classList.remove("hidden");
+  reasonText.innerText = current.detail;
+}
+
+document.getElementById("nope").onclick = () => {
+  twistText.innerText = "Yeah… no.\nStill love you though 💜";
+  goTwist();
+};
+
+document.getElementById("yet").onclick = () => {
+  twistText.innerText = current.twist;
+  goTwist();
+};
+
+function goTwist() {
+  reasonScreen.classList.add("hidden");
+  twistScreen.classList.remove("hidden");
+}
+
+function goHome() {
+  twistScreen.classList.add("hidden");
+  main.classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
